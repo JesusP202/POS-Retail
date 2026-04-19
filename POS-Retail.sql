@@ -87,4 +87,3 @@ CREATE TABLE Clientes (
     FOREIGN KEY (creado_por) REFERENCES Usuarios(cod_usuario),
     FOREIGN KEY (cod_sucursal) REFERENCES Sucursal(cod_sucursal)
 ); 
-GO
