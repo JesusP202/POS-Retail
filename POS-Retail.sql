@@ -40,3 +40,8 @@ CREATE TABLE Usuarios (
     creado_el DATETIME NOT NULL DEFAULT GETDATE()
 );
 GO
+
+CREATE TABLE Roles (
+
+)
+GO
