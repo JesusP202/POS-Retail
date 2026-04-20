@@ -87,3 +87,34 @@ CREATE TABLE Clientes (
     FOREIGN KEY (creado_por) REFERENCES Usuarios(cod_usuario),
     FOREIGN KEY (cod_sucursal) REFERENCES Sucursal(cod_sucursal)
 ); 
+GO
+
+CREATE TABLE Productos (
+    cod_producto VARCHAR(15) PRIMARY KEY,
+    id_producto INT IDENTITY(1,1) NOT NULL,
+    cod_empresa VARCHAR(15) NOT NULL,
+    nombre_producto VARCHAR(100) NOT NULL,
+    descripcion_producto VARCHAR(200) NULL,
+    precio_costo DECIMAL(18,2) NOT NULL,
+    precio_venta DECIMAL(18,2) NOT NULL,
+    estado BIT NOT NULL DEFAULT 1,
+    creado_el DATETIME NOT NULL DEFAULT GETDATE(),
+    creado_por VARCHAR(15) NOT NULL,
+    FOREIGN KEY (creado_por) REFERENCES Usuarios(cod_usuario),
+    FOREIGN KEY (cod_empresa) REFERENCES Empresa(cod_empresa)
+);
+GO
+
+CREATE TABLE Inventario(
+    id_inventario INT IDENTITY(1,1) PRIMARY KEY,
+    cod_sucursal VARCHAR(15) NOT NULL,
+    cod_producto VARCHAR(15) NOT NULL,
+    cantidad_actual INT NOT NULL,
+    stock_minimo INT NOT NULL,
+    stock_maximo INT NOT NULL,
+    ultima_actualizacion DATETIME NOT NULL DEFAULT GETDATE(),
+    FOREIGN KEY (cod_sucursal) REFERENCES Sucursal(cod_sucursal),
+    FOREIGN KEY (cod_producto) REFERENCES Productos(cod_producto)
+);
+GO
+
