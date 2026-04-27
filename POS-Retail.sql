@@ -118,3 +118,11 @@ CREATE TABLE Inventario(
 );
 GO
 
+CREATE TABLE Tipo_Pago (
+    cod_tipo_pago VARCHAR(15) PRIMARY KEY,
+    id_tipo_pago INT IDENTITY(1,1) NOT NULL,
+    nombre_tipo_pago VARCHAR(50) NOT NULL,
+    estado BIT NOT NULL DEFAULT 1
+);
+GO
+
