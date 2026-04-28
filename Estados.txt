@@ -1,0 +1,6 @@
+Estado 1: Facturado
+Estado 2: Devolución
+Estado 3: Pagada
+Estado 4: Parcialmente Pagada
+Estado 5: Cancelada
+Estado 6: Pendiente
