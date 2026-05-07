@@ -309,10 +309,11 @@ GO
 CREATE TABLE CxCDetalle (
     id_cxcdetalle INT IDENTITY(1,1) PRIMARY KEY,
     id_cxc INT NOT NULL,
-    cod_factura VARCHAR(15) NOT NULL,
+    id_factura INT NOT NULL,
     monto_pagado DECIMAL(18,2) NOT NULL,
     fecha_pago DATETIME NOT NULL DEFAULT GETDATE(),
-    FOREIGN KEY (id_cxc) REFERENCES CxCEncabezado(id_cxc)
+    FOREIGN KEY (id_cxc) REFERENCES CxCEncabezado(id_cxc),
+    FOREIGN KEY (id_factura) REFERENCES FacturaEncabezado(id_factura)
 );
 GO
 
@@ -334,10 +335,11 @@ GO
 CREATE TABLE CxPDetalle (
     id_cxpdetalle INT IDENTITY(1,1) PRIMARY KEY,
     id_cxp INT NOT NULL,
-    cod_compra VARCHAR(15) NOT NULL,
+    id_factura INT NOT NULL,
     monto_pagado DECIMAL(18,2) NOT NULL,
     fecha_pago DATETIME NOT NULL DEFAULT GETDATE(),
-    FOREIGN KEY (id_cxp) REFERENCES CxPEncabezado(id_cxp)
+    FOREIGN KEY (id_cxp) REFERENCES CxPEncabezado(id_cxp),
+    FOREIGN KEY (id_factura) REFERENCES FacturaEncabezado(id_factura)
 );
 GO
 
