@@ -191,19 +191,6 @@ CREATE TABLE Tipo_Pago (
 );
 GO
 
-CREATE TABLE TransaccionesBancarias (
-    id_transaccion INT IDENTITY(1,1) PRIMARY KEY,
-    cod_empresa VARCHAR(15) NOT NULL,
-    tipo_transaccion VARCHAR(50) NOT NULL, -- Depósito, Retiro
-    monto DECIMAL(18,2) NOT NULL,
-    fecha_transaccion DATETIME NOT NULL DEFAULT GETDATE(),
-    referencia VARCHAR(100),
-    id_factura INT,
-    FOREIGN KEY (cod_empresa) REFERENCES Empresa(cod_empresa),
-    FOREIGN KEY (id_factura) REFERENCES FacturaEncabezado(id_factura)
-);
-GO
-
 CREATE TABLE CompraEncabezado (
     id_compra INT IDENTITY(1,1) PRIMARY KEY,
     cod_proveedor VARCHAR(15) NOT NULL,
@@ -247,6 +234,19 @@ CREATE TABLE FacturaEncabezado (
     FOREIGN KEY (cod_usuario) REFERENCES Usuarios(cod_usuario),
     FOREIGN KEY (cod_tipo_pago) REFERENCES Tipo_Pago(cod_tipo_pago),
     FOREIGN KEY (id_estado) REFERENCES Estados(id_estado)
+);
+GO
+
+CREATE TABLE TransaccionesBancarias (
+    id_transaccion INT IDENTITY(1,1) PRIMARY KEY,
+    cod_empresa VARCHAR(15) NOT NULL,
+    tipo_transaccion VARCHAR(50) NOT NULL, -- Depósito, Retiro
+    monto DECIMAL(18,2) NOT NULL,
+    fecha_transaccion DATETIME NOT NULL DEFAULT GETDATE(),
+    referencia VARCHAR(100),
+    id_factura INT,
+    FOREIGN KEY (cod_empresa) REFERENCES Empresa(cod_empresa),
+    FOREIGN KEY (id_factura) REFERENCES FacturaEncabezado(id_factura)
 );
 GO
 
