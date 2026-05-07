@@ -669,6 +669,7 @@ CREATE PROCEDURE sp_ReporteIngresosPorVentas
 AS
 BEGIN
     SELECT 
+        -- Usamos la misma expresión que en el GROUP BY
         CONVERT(VARCHAR(10), t.fecha_transaccion, 120) AS Fecha,
         COUNT(DISTINCT t.id_transaccion) AS CantidadTransacciones,
         SUM(t.monto) AS MontoTotal,
@@ -679,8 +680,9 @@ BEGIN
     WHERE t.cod_empresa = @cod_empresa
     AND CAST(t.fecha_transaccion AS DATE) BETWEEN @fecha_inicio AND @fecha_fin
     AND t.tipo_transaccion = 'Depósito'
-    GROUP BY CAST(t.fecha_transaccion AS DATE), t.tipo_transaccion, e.nombre_empresa
-    ORDER BY CAST(t.fecha_transaccion AS DATE) DESC;
+    -- Agregamos tipo_transaccion y nombre_empresa para que coincidan con el SELECT
+    GROUP BY CONVERT(VARCHAR(10), t.fecha_transaccion, 120), t.tipo_transaccion, e.nombre_empresa
+    ORDER BY Fecha DESC;
 END;
 GO
 
@@ -750,21 +752,21 @@ CREATE PROCEDURE sp_ReporteIntentosSesion
 AS
 BEGIN
     SELECT 
-        is.id_intento,
-        is.cod_usuario,
+        i.id_intento, -- Cambiamos el alias 'is' por 'i'
+        i.cod_usuario,
         u.nombre_usuario,
         u.apellido_usuario,
-        is.fecha_intento,
+        i.fecha_intento,
         CASE 
-            WHEN is.exitoso = 1 THEN 'Exitoso'
+            WHEN i.exitoso = 1 THEN 'Exitoso'
             ELSE 'Fallido'
         END AS Resultado
-    FROM IntentosSesion is
-    INNER JOIN Usuarios u ON is.cod_usuario = u.cod_usuario
-    WHERE (@cod_usuario IS NULL OR is.cod_usuario = @cod_usuario)
-    AND (@fecha_inicio IS NULL OR CAST(is.fecha_intento AS DATE) >= @fecha_inicio)
-    AND (@fecha_fin IS NULL OR CAST(is.fecha_intento AS DATE) <= @fecha_fin)
-    ORDER BY is.fecha_intento DESC;
+    FROM IntentosSesion i -- Cambiamos el alias aquí
+    INNER JOIN Usuarios u ON i.cod_usuario = u.cod_usuario
+    WHERE (@cod_usuario IS NULL OR i.cod_usuario = @cod_usuario)
+    AND (@fecha_inicio IS NULL OR CAST(i.fecha_intento AS DATE) >= @fecha_inicio)
+    AND (@fecha_fin IS NULL OR CAST(i.fecha_intento AS DATE) <= @fecha_fin)
+    ORDER BY i.fecha_intento DESC;
 END;
 GO
 
